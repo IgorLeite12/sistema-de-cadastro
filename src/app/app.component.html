@@ -1,1 +1,14 @@
-<button mat-flat-button>Aqui</button>
+<mat-toolbar color="primary">
+  <span>Cadastro de clientes</span>
+  <span class="spacer"></span>
+  <a routerLink="clientes">
+    <mat-icon color="white">people</mat-icon>
+    Formulário
+  </a>
+  <a routerLink="cadastro">
+    <mat-icon color="white">search</mat-icon>
+    Conusulta
+  </a>
+</mat-toolbar>
+
+<router-outlet></router-outlet>
