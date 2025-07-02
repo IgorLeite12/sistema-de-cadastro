@@ -9,7 +9,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatTableModule } from '@angular/material/table';
 import { ClientService } from '../../client.service';
 import { Client } from './client';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 
 @Component({
   selector: 'app-registration',
@@ -21,7 +22,10 @@ import { ActivatedRoute } from '@angular/router';
     MatInputModule,
     MatIconModule,
     MatButtonModule,
-    MatTableModule
+    MatTableModule,
+    NgxMaskDirective
+  ], providers: [
+    provideNgxMask()
   ],
   templateUrl: './registration.component.html',
   styleUrl: './registration.component.scss'
@@ -34,13 +38,10 @@ export class RegistrationComponent implements OnInit {
 
   constructor(
     private service: ClientService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) { }
 
-  safeClient() {
-    this.service.safe(this.client);
-    this.client = Client.newClient();
-  }
 
   ngOnInit(): void {
     this.route.queryParamMap.subscribe( (query: any ) => {
@@ -54,5 +55,15 @@ export class RegistrationComponent implements OnInit {
         }
       }
     })
+  }
+
+    safeClient() {
+      if(!this.update) {
+        this.service.safe(this.client);
+        this.client = Client.newClient();
+      } else {
+        this.service.updateUser(this.client);
+        this.router.navigate(['/clientes']);
+      }
   }
 }
