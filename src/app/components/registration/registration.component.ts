@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -10,6 +10,7 @@ import { MatTableModule } from '@angular/material/table';
 import { ClientService } from '../../client.service';
 import { Client } from './client';
 import { ActivatedRoute, Router } from '@angular/router';
+import {MatSnackBar} from '@angular/material/snack-bar';
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 
 @Component({
@@ -35,6 +36,7 @@ export class RegistrationComponent implements OnInit {
 
   client: Client = Client.newClient();  
   update: boolean = false;
+  SnackBar = inject(MatSnackBar);
 
   constructor(
     private service: ClientService,
@@ -61,9 +63,18 @@ export class RegistrationComponent implements OnInit {
       if(!this.update) {
         this.service.safe(this.client);
         this.client = Client.newClient();
+        this.viewMessage('Cliente cadastrado com sucesso!');
       } else {
         this.service.updateUser(this.client);
         this.router.navigate(['/clientes']);
+        this.viewMessage('Cliente atualizado com sucesso!');
       }
+  }
+
+  viewMessage(message: string) {
+    this.SnackBar.open(message, '')
+    setTimeout(() => {
+      this.SnackBar.dismiss();
+    }, 3000);
   }
 }

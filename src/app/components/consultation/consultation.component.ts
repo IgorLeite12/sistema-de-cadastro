@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -9,6 +9,7 @@ import { MatTableModule } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { ClientService } from '../../client.service';
 import { Client } from '../registration/client';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-consultation',
@@ -29,6 +30,8 @@ export class ConsultationComponent implements OnInit {
   nameSearch: string = '';
   listClients: Client[] = [];
   columnsClient: string[] = ['id', 'name', 'email', 'birthdate', 'cpf', 'action'];
+  SnackBar = inject(MatSnackBar);
+
 
   constructor(
     private service: ClientService,
@@ -55,5 +58,13 @@ export class ConsultationComponent implements OnInit {
   delete(client: Client) {
     this.service.delete(client);
     this.listClients = this.service.searchClient('');
+    this.viewMessage('Cliente excluído com sucesso!');
+  }
+
+  viewMessage(message: string) {
+    this.SnackBar.open(message, '')
+    setTimeout(() => {
+      this.SnackBar.dismiss();
+    }, 3000);
   }
 }
