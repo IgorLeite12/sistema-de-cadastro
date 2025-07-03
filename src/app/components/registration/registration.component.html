@@ -38,12 +38,32 @@
                         <div fxLayout="column" fxFlex="400px">
                             <mat-form-field class="full-width">
                                 <mat-label>CPF *</mat-label>
-                                <input type="text" 
-                                       [(ngModel)]="client.cpf"
-                                       placeholder="Digite seu CPF"
-                                       name="cpf"
-                                       mask="000.000.000-00"
-                                matInput>
+                                <input type="text" [(ngModel)]="client.cpf" placeholder="Digite seu CPF" name="cpf"
+                                    mask="000.000.000-00" matInput>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div fxLayout="row" fxLayoutAlign="start" fxLayoutGap="16px">
+                        <div fxLayout="column" fxFlex="400px">
+                            <mat-form-field class="full-width">
+                                <mat-label>UF *</mat-label>
+                                <mat-select [(value)]="client.uf" (selectionChange)="carregarCidades($event)">
+                                    <mat-option *ngFor="let uf of estado" [value]="uf.sigla">
+                                        {{uf.sigla}} - {{uf.nome}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div fxLayout="row" fxLayoutAlign="start" fxLayoutGap="16px">
+                        <div fxLayout="column" fxFlex="400px">
+                            <mat-form-field class="full-width">
+                                <mat-label>Cidades *</mat-label>
+                                <mat-select [(value)]="client.cidade">
+                                    <mat-option *ngFor="let m of cidade" [value]="m.nome">
+                                        {{m.nome}}
+                                    </mat-option>
+                                </mat-select>
                             </mat-form-field>
                         </div>
                     </div>

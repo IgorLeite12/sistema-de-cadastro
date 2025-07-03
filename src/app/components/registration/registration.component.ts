@@ -6,6 +6,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatOption, MatSelect, MatSelectChange } from '@angular/material/select';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableModule } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -14,6 +15,8 @@ import { Cidades, Estados } from '../../brasil-api.models';
 import { BrasilApiService } from '../../brasil-api.service';
 import { ClientService } from '../../client.service';
 import { Client } from './client';
+import { CommonModule } from '@angular/common';
+import { MatOptionSelectionChange } from '@angular/material/core';
 
 @Component({
   selector: 'app-registration',
@@ -24,6 +27,9 @@ import { Client } from './client';
     MatFormFieldModule,
     MatInputModule,
     MatIconModule,
+    MatSelect,
+    MatOption,
+    CommonModule,
     MatButtonModule,
     MatTableModule,
     NgxMaskDirective
@@ -59,6 +65,10 @@ export class RegistrationComponent implements OnInit {
         if (clientFound) {
           this.update = true;
           this.client = clientFound;
+          if(this.client.uf) {
+            const event = { value: this.client.uf }
+            this.carregarCidades(event as MatSelectChange)
+          }
         }
       }
     })
@@ -80,8 +90,16 @@ export class RegistrationComponent implements OnInit {
 
   carregarEstados() {
     this.brasilApiService.listarUFs().subscribe({
-      next: listaEstado => console.log("lista de estados:", listaEstado),
-      error: error => console.error("Ops, ocorreu um erro ao carragar os estados:", error)
+      next: listaEstado => this.estado = listaEstado,
+      error: error => console.error('Erro ao carregar estados:', error)
+    })
+  }
+
+  carregarCidades(event: MatSelectChange) {
+    const ufSelected = event.value;
+    this.brasilApiService.listarMunicipios(ufSelected).subscribe({
+      next: listaCidades => this.cidade = listaCidades,
+      error: error => console.error('Erro ao carregar cidades:', error)
     })
   }
 

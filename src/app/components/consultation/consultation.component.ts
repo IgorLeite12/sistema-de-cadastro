@@ -29,7 +29,7 @@ export class ConsultationComponent implements OnInit {
 
   nameSearch: string = '';
   listClients: Client[] = [];
-  columnsClient: string[] = ['id', 'name', 'email', 'birthdate', 'cpf', 'action'];
+  columnsClient: string[] = ['id', 'name', 'email', 'birthdate', 'cpf', 'estado', 'action'];
   SnackBar = inject(MatSnackBar);
 
 
@@ -45,7 +45,6 @@ export class ConsultationComponent implements OnInit {
   search() {
     this.listClients = this.service.searchClient(this.nameSearch);
   }
-
 
   prepareEdit(id: string) {
     this.router.navigate(['/cadastro'], { queryParams: { id: id } })

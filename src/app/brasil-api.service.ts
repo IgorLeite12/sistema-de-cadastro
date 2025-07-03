@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Estados } from './brasil-api.models'; 
+import { Estados, Cidades } from './brasil-api.models'; 
 
 @Injectable({ 
   providedIn: 'root'
@@ -15,5 +15,10 @@ export class BrasilApiService {
   listarUFs(): Observable<Estados[]>{
     const path = '/ibge/uf/v1';
     return this.http.get<Estados[]>(this.baseURL + path);
+  }
+
+  listarMunicipios(uf: string) : Observable<Cidades[]> {
+    const path = '/ibge/municipios/v1/' + uf;
+    return this.http.get<Cidades[]>(this.baseURL + path);
   }
 }
