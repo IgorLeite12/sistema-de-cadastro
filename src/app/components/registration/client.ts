@@ -8,7 +8,7 @@ export class Client {
     cpf?: string;
     deleting: boolean = false;
     uf?: string;
-    cidade?: string;
+    city?: string;
 
     static newClient() {
         const client = new Client();

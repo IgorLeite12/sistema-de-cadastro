@@ -29,7 +29,7 @@ export class ConsultationComponent implements OnInit {
 
   nameSearch: string = '';
   listClients: Client[] = [];
-  columnsClient: string[] = ['id', 'name', 'email', 'birthdate', 'cpf', 'estado', 'action'];
+  columnsClient: string[] = ['id', 'name', 'email', 'birthdate', 'cpf', 'uf', 'city', 'action'];
   SnackBar = inject(MatSnackBar);
 
 

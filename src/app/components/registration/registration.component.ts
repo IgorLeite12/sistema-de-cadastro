@@ -11,12 +11,11 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableModule } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
-import { Cidades, Estados } from '../../brasil-api.models';
+import { City, State } from '../../brasil-api.models';
 import { BrasilApiService } from '../../brasil-api.service';
 import { ClientService } from '../../client.service';
 import { Client } from './client';
 import { CommonModule } from '@angular/common';
-import { MatOptionSelectionChange } from '@angular/material/core';
 
 @Component({
   selector: 'app-registration',
@@ -45,8 +44,8 @@ export class RegistrationComponent implements OnInit {
   client: Client = Client.newClient();
   update: boolean = false;
   SnackBar = inject(MatSnackBar);
-  estado: Estados[] = [];
-  cidade: Cidades[] = [];
+  state: State[] = [];
+  city: City[] = [];
 
   constructor(
     private service: ClientService,
@@ -67,12 +66,12 @@ export class RegistrationComponent implements OnInit {
           this.client = clientFound;
           if(this.client.uf) {
             const event = { value: this.client.uf }
-            this.carregarCidades(event as MatSelectChange)
+            this.loadCity(event as MatSelectChange)
           }
         }
       }
     })
-    return this.carregarEstados();
+    return this.loadStates();
 
   }
 
@@ -88,17 +87,26 @@ export class RegistrationComponent implements OnInit {
     }
   }
 
-  carregarEstados() {
+  clearFields() {
+    this.client = Client.newClient();
+    this.client.birthdate = ''
+    this.update = false;
+    this.city = [];
+    this.state = [];
+    this.viewMessage('Campos limpos com sucesso!');
+  }
+
+  loadStates() {
     this.brasilApiService.listarUFs().subscribe({
-      next: listaEstado => this.estado = listaEstado,
+      next: listStates => this.state = listStates,
       error: error => console.error('Erro ao carregar estados:', error)
     })
   }
 
-  carregarCidades(event: MatSelectChange) {
+  loadCity(event: MatSelectChange) {
     const ufSelected = event.value;
     this.brasilApiService.listarMunicipios(ufSelected).subscribe({
-      next: listaCidades => this.cidade = listaCidades,
+      next: listCity => this.city = listCity,
       error: error => console.error('Erro ao carregar cidades:', error)
     })
   }

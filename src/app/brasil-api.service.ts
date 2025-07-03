@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Estados, Cidades } from './brasil-api.models'; 
+import { State, City } from './brasil-api.models';
 
-@Injectable({ 
+@Injectable({
   providedIn: 'root'
 })
 export class BrasilApiService {
@@ -12,13 +12,13 @@ export class BrasilApiService {
 
   constructor(private http: HttpClient) { }
 
-  listarUFs(): Observable<Estados[]>{
+  listarUFs(): Observable<State[]>{
     const path = '/ibge/uf/v1';
-    return this.http.get<Estados[]>(this.baseURL + path);
+    return this.http.get<State[]>(this.baseURL + path);
   }
 
-  listarMunicipios(uf: string) : Observable<Cidades[]> {
+  listarMunicipios(uf: string) : Observable<City[]> {
     const path = '/ibge/municipios/v1/' + uf;
-    return this.http.get<Cidades[]>(this.baseURL + path);
+    return this.http.get<City[]>(this.baseURL + path);
   }
 }

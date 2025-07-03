@@ -28,7 +28,7 @@
 </div>
 
 <div fxLayout="row" fxLayoutAlign="center" class="mt-20">
-    <div fxLayout="column" fxFlex="1000px">
+    <div fxLayout="column" fxFlex="1200px">
         <mat-card appearance="outlined">
             <mat-card-header>
                 <mat-card-title class="title">Resultado</mat-card-title>
@@ -61,25 +61,30 @@
                         <td mat-cell *matCellDef="let client"> {{client.cpf}} </td>
                     </ng-container>
 
-                    <ng-container matColumnDef="estado">
+                    <ng-container matColumnDef="uf">
                         <th mat-header-cell *matHeaderCellDef> Estado </th>
-                        <td mat-cell *matCellDef="let client"> {{client.estado}} </td>
+                        <td mat-cell *matCellDef="let client"> {{client.uf}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="city">
+                        <th mat-header-cell *matHeaderCellDef> Estado </th>
+                        <td mat-cell *matCellDef="let client"> {{client.city}} </td>
                     </ng-container>
 
                     <ng-container matColumnDef="action">
                         <th mat-header-cell *matHeaderCellDef></th>
                         <td mat-cell *matCellDef="let client">
-                            <button mat-flat-button color="accent" (click)="prepareEdit(client.id)">
+                            <button mat-button (click)="prepareEdit(client.id)">
                                 <mat-icon fontIcon="edit"></mat-icon>
                                 Editar
                             </button>
                             @if(!client.deleting) {
-                                <button mat-flat-button color="accent" (click)="prepareDelete(client)">
+                                <button mat-button (click)="prepareDelete(client)">
                                     <mat-icon fontIcon="delete"></mat-icon>
                                     Excluir
                                 </button>
                             } @else {
-                                <button mat-flat-button color="accent" (click)="delete(client)">
+                                <button mat-button (click)="delete(client)">
                                     <mat-icon fontIcon="question_mark"></mat-icon>
                                     confirmation
                                 </button>

@@ -1,10 +1,10 @@
-export interface Estados {
+export interface State {
     sigla: string;
     nome: string;
 
 }
 
-export interface Cidades {
+export interface City {
     nome: string;
     codigo_ibge: string;
 
